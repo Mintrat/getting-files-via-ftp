@@ -1,9 +1,9 @@
 <?php
 
 
-function getImg(String $pathToRemoteImg, ?array &$error = null): bool
+function getImg(String $pathToRemoteImg, array &$error = array()): bool
 {
-    ini_set('max_execution_time', 900);
+    set_time_limit(900);
     $dir = DIR . '/img';
 
     if (!file_exists($dir)) {
@@ -12,9 +12,7 @@ function getImg(String $pathToRemoteImg, ?array &$error = null): bool
     $content = file_get_contents($pathToRemoteImg);
 
     if (!$content) {
-        if ($error) {
-            $error[] = 'Failed get image';
-        }
+        $error[] = 'Failed get image';
         return false;
     }
 
@@ -29,17 +27,12 @@ function getImg(String $pathToRemoteImg, ?array &$error = null): bool
     $pathToFile = $dir . '/' . $imageName;
 
     if (file_exists($pathToFile)) {
-        if ($error) {
-            $error[] = "File {$imageName} exists";
-        }
-        return false;
+        $error[] = "File {$imageName} exists";
     }
 
     $file =  fopen($pathToFile, 'w');
     if ($file) {
-        if ($error) {
-            $error[] = 'Failed to create a file';
-        }
+        $error[] = 'Failed to create a file';
     }
     fclose($file);
     $result = file_put_contents($pathToFile, $content);
