@@ -3,6 +3,7 @@
 
 function getImg(String $pathToRemoteImg, ?array &$error = null): bool
 {
+    ini_set('max_execution_time', 900);
     $dir = DIR . '/img';
 
     if (!file_exists($dir)) {
@@ -41,4 +42,11 @@ function getImg(String $pathToRemoteImg, ?array &$error = null): bool
         }
     }
     fclose($file);
+    $result = file_put_contents($pathToFile, $content);
+
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
 }

@@ -14,12 +14,16 @@ if (isset($_GET['test'])) {
 $file = file_get_contents($param['localFile']);
 
 $xml = new SimpleXMLElement($file);
-echo '<pre>';
 
 $imgLink = $xml->gd[0]->image;
-$arr = explode('/', $imgLink);
-$nameImage = $arr[count($arr) - 1];
-$nameImage = urldecode($nameImage);
-echo str_replace(' ', '_', $nameImage);
 
+for ($count = 0; $count < 200; ++$count) {
+    if (isset($xml->gd[$count])) {
+        $imgLink = $xml->gd[$count]->image;
 
+        if ($imgLink) {
+            getImg($imgLink);
+        }
+    }
+
+}

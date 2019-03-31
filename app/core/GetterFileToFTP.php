@@ -23,13 +23,10 @@ class GetterFileToFTP {
 	{
 		if (!empty($listArgs)) {
 			foreach ($listArgs as $key => $value) {
-
 				$methodName = 'set' . $key;
-
 				if ($this->propertyExists($key) && $this->methodExists($methodName)) {
 					$this->$methodName($value);
 				} 
-
 			}
 		}
 
@@ -72,7 +69,6 @@ class GetterFileToFTP {
         } else {
             throw new Exception('Host not set');
         }
-
         $connect = ftp_connect($host);
 
         if ($connect) {
